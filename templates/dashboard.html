@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Overview{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-sm font-medium text-slate-500">Compliance Score</p>
+        <h3 class="text-3xl font-bold text-slate-800 mt-2">{{ stats.score }}%</h3>
+      </div>
+      <span class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      </span>
+    </div>
+    <div class="mt-4 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+      <div class="h-full bg-emerald-500 rounded-full" style="width: {{ stats.score }}%"></div>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-sm font-medium text-slate-500">Expiring Soon</p>
+        <h3 class="text-3xl font-bold text-amber-600 mt-2">{{ stats.expiring }}</h3>
+      </div>
+      <span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      </span>
+    </div>
+    <p class="text-xs text-slate-400 mt-4">Requires attention this month</p>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-sm font-medium text-slate-500">Active Documents</p>
+        <h3 class="text-3xl font-bold text-slate-800 mt-2">{{ stats.total }}</h3>
+      </div>
+      <span class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-sm font-medium text-slate-500">AI Insights</p>
+        <h3 class="text-3xl font-bold text-purple-600 mt-2">{{ stats.ai_insights }}</h3>
+      </div>
+      <span class="p-2 bg-purple-50 text-purple-600 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      </span>
+    </div>
+    <p class="text-xs text-slate-400 mt-4">Documents processed by AI</p>
+  </div>
+</div>
+
+<h2 class="text-lg font-semibold text-slate-800 mb-4">Recent Activity</h2>
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider">
+      <tr>
+        <th class="px-6 py-3 font-medium">Document Name</th>
+        <th class="px-6 py-3 font-medium">Category</th>
+        <th class="px-6 py-3 font-medium">Status</th>
+        <th class="px-6 py-3 font-medium">Date Added</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200">
+      {% for doc in recent_docs %}
+      <tr class="hover:bg-slate-50">
+        <td class="px-6 py-4 font-medium text-slate-900">{{ doc.name }}</td>
+        <td class="px-6 py-4 text-slate-500">{{ doc.category }}</td>
+        <td class="px-6 py-4">
+          {% if doc.status == 'Active' %}
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Active</span>
+          {% elif doc.status == 'Expiring Soon' %}
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Expiring</span>
+          {% else %}
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Expired</span>
+          {% endif %}
+        </td>
+        <td class="px-6 py-4 text-slate-500">{{ doc.created_at.strftime('%Y-%m-%d') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
