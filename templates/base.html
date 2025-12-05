@@ -42,12 +42,34 @@
     </aside>
 
     <div class="flex-1 flex flex-col overflow-hidden">
-      <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm">
+      <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm relative z-20">
         <h1 class="text-xl font-semibold text-slate-800">
           {% block title %}Dashboard{% endblock %}
         </h1>
+        
         <div class="flex items-center gap-4">
-          <div class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-sm font-bold border border-slate-300">KN</div>
+          <div class="relative">
+            <button onclick="toggleUserDropdown()" class="flex items-center gap-3 focus:outline-none">
+              <div class="text-right hidden md:block">
+                <p class="text-sm font-semibold text-slate-700">Kristians Neilands</p>
+                <p class="text-xs text-slate-500">Admin</p>
+              </div>
+              <div class="h-9 w-9 rounded-full bg-sky-100 flex items-center justify-center text-sky-700 text-sm font-bold border border-sky-200 hover:bg-sky-200 transition-colors cursor-pointer">
+                  KN
+              </div>
+            </button>
+      
+            <div id="userDropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-xl border border-slate-100 py-1 origin-top-right transform transition-all duration-200 z-50">
+              <div class="px-4 py-3 border-b border-slate-100 md:hidden">
+                  <p class="text-sm font-semibold text-slate-700">Kristians Neilands</p>
+                  <p class="text-xs text-slate-500">user@example.com</p>
+              </div>
+              <a href="{{ url_for('settings') }}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-sky-600">Profile</a>
+              <a href="{{ url_for('settings') }}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-sky-600">Settings</a>
+              <div class="border-t border-slate-100 my-1"></div>
+              <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Sign out</a>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -68,5 +90,22 @@
       </main>
     </div>
   </div>
+
+  <script>
+    function toggleUserDropdown() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+      if (!event.target.closest('.relative')) {
+        const dropdown = document.getElementById('userDropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    }
+  </script>
 </body>
 </html>

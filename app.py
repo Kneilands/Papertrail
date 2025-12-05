@@ -150,6 +150,14 @@ def delete_document(id):
 def assistant():
     return render_template('assistant.html')
 
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if request.method == 'POST':
+        # Placeholder for saving settings logic
+        flash('Settings saved successfully.', 'success')
+        return redirect(url_for('settings'))
+    return render_template('settings.html')
+
 @app.route('/api/analyze', methods=['POST'])
 def analyze_file():
     """

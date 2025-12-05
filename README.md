@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PaperTrail - Compliance Dashboard (v2.0)
 
 A professional-grade mock compliance dashboard for small businesses. Features document tracking, renewal alerts, and an AI assistant for document analysis.
@@ -16,9 +15,8 @@ A professional-grade mock compliance dashboard for small businesses. Features do
 1. **Environment Setup**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
+   source venv/bin/activate
    pip install -r requirements.txt
-=======
 # Papertrail
 AI-powered compliance.
 
@@ -67,4 +65,3 @@ Environment Variable: SENDGRID_API_KEY
 - Database: SQLite
 - Version Control: GitHub
 ```
->>>>>>> origin/main
